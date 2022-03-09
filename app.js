@@ -1,25 +1,29 @@
+#! /usr/bin/env node
+
 const excel = require('exceljs');
 require('dotenv').config()
 const fs = require('fs');
 
+const { askDate } = require('./controllers/date')
 const { getNames } = require('./controllers/name.js')
-const { addRows } = require('./controllers/rows')
+// const { addRows } = require('./controllers/rows')
+const { seperateNames } = require('./controllers/configure-names.js')
 
 const main = async () => {
-    // get date
-    //get year
+    const date = await askDate()
     let names = await getNames()
-    names = seperateNames(names)
     const rows = []
-    for (let name in names) {
+    for (let name of names) {
+        const client = seperateNames(name)
         // last name || first name || date || mailed to TA || Document Mailed
         rows.push({
-            lastName: name.last,
-            firstName: name.first,
-            date: inputDate,
+            lastName: client.firstName,
+            firstName: client.lastName,
+            date,
             ta: "No",
-            doc: `Documents ${docYears}`
+            doc: `Documents ${client.years}`
         })
     }
-    
+    addRows(rows).then(() => console.log("rows added to file"))
 }
+main()
