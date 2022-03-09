@@ -1,6 +1,7 @@
 const readline = require('readline').createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
+    terminal: false
 })
 
 
@@ -8,7 +9,7 @@ const readline = require('readline').createInterface({
 const askName = () => {
     return new Promise((resolve, reject) => {
         readline.question(`Enter Name of client. `, name => {
-            resolve(name)
+            resolve(name.replaceAll(/\x7F/g, ''))
         })
     });
 }
