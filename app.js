@@ -6,7 +6,7 @@ const fs = require('fs');
 
 const { askDate } = require('./controllers/date')
 const { getNames } = require('./controllers/name.js')
-// const { addRows } = require('./controllers/rows')
+const { addRows } = require('./controllers/rows')
 const { seperateNames } = require('./controllers/configure-names.js')
 
 const main = async () => {
